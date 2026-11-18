@@ -1,5 +1,8 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
+const connectDB = require("./config/db");
 const devicesRouter = require("./routes/devices");
 const roomsRouter = require("./routes/rooms");
 const usersRouter = require("./routes/users");
@@ -35,6 +38,20 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Something went wrong on the server" });
 });
 
-app.listen(port, () => {
-  console.log(`HomeSync API listening on port ${port}`);
-});
+connectDB()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`HomeSync API listening on port ${port}`);
+    });
+  })
+  .catch((error) => {
+    const cause = error.cause || {};
+    const safeMessage = String(error.message || cause.message || "Unknown connection error")
+      .replace(/mongodb(\+srv)?:\/\/\S+/gi, "mongodb://<redacted>");
+
+    console.error("Could not connect to MongoDB Atlas.");
+    console.error("Error name:", error.name || "Error");
+    console.error("Error code:", error.code || cause.code || "none");
+    console.error("Error message:", safeMessage);
+    process.exit(1);
+  });
