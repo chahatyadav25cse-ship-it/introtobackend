@@ -1,12 +1,9 @@
-# HomeSync
+# introtobackend
 
-HomeSync is a smart home web app for managing rooms, devices and settings.
+introtobackend is a smart home web app for managing rooms, devices and settings.
 
-## Team
 
-- Arjan Khandelwal (https://github.com/arjan-74/)
-- Chahat Yadav (https://github.com/chahatyadav25cse-ship-it)
-- Trisha Alankar (https://github.com/trishaalankar19)
+
 
 ## Running the backend
 
